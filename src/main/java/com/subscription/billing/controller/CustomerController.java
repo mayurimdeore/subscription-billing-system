@@ -1,4 +1,5 @@
 package com.subscription.billing.controller;
+import javax.validation.Valid;
 
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public Customer createCustomer(@RequestBody Customer customer) {
+    public Customer createCustomer(@Valid @RequestBody Customer customer) {
         return customerService.createCustomer(customer);
     }
 

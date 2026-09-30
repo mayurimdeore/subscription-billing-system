@@ -1,4 +1,6 @@
 package com.subscription.billing.entity;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,9 +13,14 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+ 
+    @NotBlank
     private String name;
+    
+    @Email
     private String email;
+    
+    @NotBlank
     private String phone;
 
     public Customer() {
