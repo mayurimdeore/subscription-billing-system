@@ -1,9 +1,12 @@
 package com.subscription.billing.entity;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive; 
 
 @Entity
 public class SubscriptionPlan {
@@ -12,8 +15,13 @@ public class SubscriptionPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String name;
+    
+    @Positive
     private Double price;
+    
+    @Positive
     private Integer durationInDays;
 
     public SubscriptionPlan() {

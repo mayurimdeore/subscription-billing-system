@@ -1,7 +1,6 @@
 package com.subscription.billing.controller;
 
 import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.subscription.billing.entity.SubscriptionPlan;
 import com.subscription.billing.service.SubscriptionPlanService;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/plans")
@@ -42,10 +42,10 @@ public class SubscriptionPlanController {
     }
 
     @PostMapping
-    public SubscriptionPlan createPlan(@RequestBody SubscriptionPlan plan) {
-        return subscriptionPlanService.createPlan(plan);
+    public SubscriptionPlan createSubscriptionPlan(
+            @Valid @RequestBody SubscriptionPlan subscriptionPlan) {
+        return subscriptionPlanService.createPlan(subscriptionPlan);
     }
-
     @PutMapping("/{id}")
     public ResponseEntity<SubscriptionPlan> updatePlan(
             @PathVariable Long id,
