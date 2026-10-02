@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Subscription {
@@ -13,15 +15,22 @@ public class Subscription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
+    @NotBlank
     private String startDate;
+    
+    @NotBlank
     private String endDate;
+    
+    @NotBlank
     private String status;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "plan_id")
     private SubscriptionPlan subscriptionPlan;
