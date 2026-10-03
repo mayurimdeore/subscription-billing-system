@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import javax.validation.Valid;
 import com.subscription.billing.entity.Payment;
 import com.subscription.billing.service.PaymentService;
 
@@ -42,7 +42,7 @@ public class PaymentController {
     }
 
     @PostMapping
-    public Payment createPayment(@RequestBody Payment payment) {
+    public Payment createPayment(@Valid @RequestBody Payment payment) {
         return paymentService.createPayment(payment);
     }
 

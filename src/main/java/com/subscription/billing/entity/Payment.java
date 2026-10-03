@@ -7,6 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Entity
 public class Payment {
@@ -15,11 +18,20 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @Positive
     private Double amount;
+
+    @NotBlank
     private String paymentDate;
+
+    @NotBlank
     private String paymentMethod;
+
+    @NotBlank
     private String status;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "invoice_id")
     private Invoice invoice;

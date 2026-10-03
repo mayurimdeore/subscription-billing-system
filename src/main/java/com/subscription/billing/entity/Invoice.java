@@ -6,6 +6,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
 
 @Entity
 public class Invoice {
@@ -14,11 +18,20 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String invoiceNumber;
+
+    @NotNull
+    @Positive
     private Double amount;
+
+    @NotBlank
     private String invoiceDate;
+
+    @NotBlank
     private String status;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "subscription_id")
     private Subscription subscription;
