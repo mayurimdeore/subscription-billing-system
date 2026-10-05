@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.subscription.billing.exception.ResourceNotFoundException;
 import com.subscription.billing.entity.SubscriptionPlan;
 import com.subscription.billing.service.SubscriptionPlanService;
 import javax.validation.Valid;
@@ -38,7 +38,9 @@ public class SubscriptionPlanController {
             return ResponseEntity.ok(plan);
         }
 
-        return ResponseEntity.notFound().build();
+        throw new ResourceNotFoundException(
+                "Subscription plan not found with id: " + id
+        );
     }
 
     @PostMapping

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.subscription.billing.entity.Customer;
 import com.subscription.billing.service.CustomerService;
+import com.subscription.billing.exception.ResourceNotFoundException;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -37,7 +38,9 @@ public class CustomerController {
             return ResponseEntity.ok(customer);
         }
 
-        return ResponseEntity.notFound().build();
+        throw new ResourceNotFoundException(
+                "Customer not found with id: " + id
+        );
     }
 
     @PostMapping

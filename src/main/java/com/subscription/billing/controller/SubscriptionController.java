@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import com.subscription.billing.entity.Subscription;
 import com.subscription.billing.service.SubscriptionService;
+import com.subscription.billing.exception.ResourceNotFoundException;
 
 @RestController
 @RequestMapping("/api/subscriptions")
@@ -38,7 +39,9 @@ public class SubscriptionController {
             return ResponseEntity.ok(subscription);
         }
 
-        return ResponseEntity.notFound().build();
+        throw new ResourceNotFoundException(
+                "Subscription not found with id: " + id
+        );
     }
 
     @PostMapping

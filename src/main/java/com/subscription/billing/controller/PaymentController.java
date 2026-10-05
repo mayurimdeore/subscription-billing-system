@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import com.subscription.billing.entity.Payment;
 import com.subscription.billing.service.PaymentService;
+import com.subscription.billing.exception.ResourceNotFoundException;
 
 @RestController
 @RequestMapping("/api/payments")
@@ -38,7 +39,9 @@ public class PaymentController {
             return ResponseEntity.ok(payment);
         }
 
-        return ResponseEntity.notFound().build();
+        throw new ResourceNotFoundException(
+                "Payment not found with id: " + id
+        );
     }
 
     @PostMapping
