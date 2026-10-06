@@ -52,7 +52,7 @@ public class PaymentController {
     @PutMapping("/{id}")
     public ResponseEntity<Payment> updatePayment(
             @PathVariable Long id,
-            @RequestBody Payment payment) {
+            @Valid @RequestBody Payment payment) {
 
         Payment updatedPayment =
                 paymentService.updatePayment(id, payment);

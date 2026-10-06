@@ -52,7 +52,7 @@ public class SubscriptionController {
     @PutMapping("/{id}")
     public ResponseEntity<Subscription> updateSubscription(
             @PathVariable Long id,
-            @RequestBody Subscription subscription) {
+            @Valid @RequestBody Subscription subscription) {
 
         Subscription updatedSubscription =
                 subscriptionService.updateSubscription(id, subscription);

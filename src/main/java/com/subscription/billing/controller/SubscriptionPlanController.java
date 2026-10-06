@@ -48,11 +48,12 @@ public class SubscriptionPlanController {
             @Valid @RequestBody SubscriptionPlan subscriptionPlan) {
         return subscriptionPlanService.createPlan(subscriptionPlan);
     }
+    
     @PutMapping("/{id}")
     public ResponseEntity<SubscriptionPlan> updatePlan(
             @PathVariable Long id,
-            @RequestBody SubscriptionPlan plan) {
-
+            @Valid @RequestBody SubscriptionPlan plan) {
+    	
         SubscriptionPlan updatedPlan =
                 subscriptionPlanService.updatePlan(id, plan);
 
