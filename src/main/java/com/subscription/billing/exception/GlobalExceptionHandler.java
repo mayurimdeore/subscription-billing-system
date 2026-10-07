@@ -60,4 +60,22 @@ public class GlobalExceptionHandler {
 	            .status(HttpStatus.NOT_FOUND)
 	            .body(errorResponse);
 	}
+	
+	@ExceptionHandler(BusinessRuleException.class)
+	public ResponseEntity<ErrorResponse> handleBusinessRuleException(
+	        BusinessRuleException ex,
+	        ServletWebRequest request) {
+
+	    ErrorResponse errorResponse = new ErrorResponse(
+	            LocalDateTime.now(),
+	            HttpStatus.BAD_REQUEST.value(),
+	            ex.getMessage(),
+	            request.getRequest().getRequestURI(),
+	            null
+	    );
+
+	    return ResponseEntity
+	            .status(HttpStatus.BAD_REQUEST)
+	            .body(errorResponse);
+	}
 }

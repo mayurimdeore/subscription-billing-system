@@ -3,13 +3,14 @@ package com.subscription.billing.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-
+import com.subscription.billing.exception.ResourceNotFoundException;
 import com.subscription.billing.entity.Customer;
 import com.subscription.billing.entity.Subscription;
 import com.subscription.billing.entity.SubscriptionPlan;
 import com.subscription.billing.repository.CustomerRepository;
 import com.subscription.billing.repository.SubscriptionPlanRepository;
 import com.subscription.billing.repository.SubscriptionRepository;
+import com.subscription.billing.exception.BusinessRuleException;
 
 @Service
 public class SubscriptionService {
@@ -37,6 +38,13 @@ public class SubscriptionService {
     }
 
     public Subscription createSubscription(Subscription subscription) {
+    	
+    	if (subscription.getEndDate().compareTo(subscription.getStartDate()) < 0) {
+    		throw new BusinessRuleException(
+    		        "End date cannot be before start date"
+    	
+    	    );
+    	}
 
         Customer customer = customerRepository
                 .findById(subscription.getCustomer().getId())
@@ -58,6 +66,11 @@ public class SubscriptionService {
 
     public Subscription updateSubscription(Long id, Subscription subscription) {
 
+    	if (subscription.getEndDate().compareTo(subscription.getStartDate()) < 0) {
+    		throw new BusinessRuleException(
+    		        "End date cannot be before start date"
+    		);
+    	} 
         Subscription existingSubscription =
                 subscriptionRepository.findById(id).orElse(null);
 
