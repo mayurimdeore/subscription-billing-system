@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.subscription.billing.entity.Invoice;
 import com.subscription.billing.entity.Payment;
+import com.subscription.billing.exception.BusinessRuleException;
 import com.subscription.billing.repository.InvoiceRepository;
 import com.subscription.billing.repository.PaymentRepository;
 
@@ -40,6 +41,12 @@ public class PaymentService {
         if (invoice == null) {
             return null;
         }
+        
+        if (payment.getAmount() > invoice.getAmount()) {
+            throw new BusinessRuleException(
+                    "Payment amount cannot be greater than invoice amount"
+            );
+        }
 
         payment.setInvoice(invoice);
 
@@ -59,6 +66,12 @@ public class PaymentService {
 
             if (invoice == null) {
                 return null;
+            }
+            
+            if (payment.getAmount() > invoice.getAmount()) {
+                throw new BusinessRuleException(
+                        "Payment amount cannot be greater than invoice amount"
+                );
             }
 
             existingPayment.setAmount(payment.getAmount());
