@@ -61,7 +61,9 @@ public class SubscriptionController {
             return ResponseEntity.ok(updatedSubscription);
         }
 
-        return ResponseEntity.notFound().build();
+        throw new ResourceNotFoundException(
+                "Subscription not found with id: " + id
+        );
     }
 
     @DeleteMapping("/{id}")
@@ -74,6 +76,8 @@ public class SubscriptionController {
             return ResponseEntity.noContent().build();
         }
 
-        return ResponseEntity.notFound().build();
+        throw new ResourceNotFoundException(
+                "Subscription not found with id: " + id
+        );
     }
 }
