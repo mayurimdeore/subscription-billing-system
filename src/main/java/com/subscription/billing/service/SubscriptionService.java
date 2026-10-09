@@ -39,7 +39,7 @@ public class SubscriptionService {
 
     public Subscription createSubscription(Subscription subscription) {
     	
-    	if (subscription.getEndDate().compareTo(subscription.getStartDate()) < 0) {
+    	if (subscription.getEndDate().isBefore(subscription.getStartDate()))  {
     		throw new BusinessRuleException(
     		        "End date cannot be before start date"
     	
@@ -66,7 +66,7 @@ public class SubscriptionService {
 
     public Subscription updateSubscription(Long id, Subscription subscription) {
 
-    	if (subscription.getEndDate().compareTo(subscription.getStartDate()) < 0) {
+    	if (subscription.getEndDate().isBefore(subscription.getStartDate())) {
     		throw new BusinessRuleException(
     		        "End date cannot be before start date"
     		);

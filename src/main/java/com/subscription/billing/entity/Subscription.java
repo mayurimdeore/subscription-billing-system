@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Entity
 public class Subscription {
@@ -16,11 +17,11 @@ public class Subscription {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NotBlank
-    private String startDate;
-    
-    @NotBlank
-    private String endDate;
+    @NotNull
+    private LocalDate startDate;
+
+    @NotNull
+    private LocalDate endDate;
     
     @NotBlank
     private String status;
@@ -38,24 +39,24 @@ public class Subscription {
     public Subscription() {
     }
 
-    public Subscription(String startDate, String endDate, String status,
-                        Customer customer, SubscriptionPlan subscriptionPlan) {
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.status = status;
-        this.customer = customer;
-        this.subscriptionPlan = subscriptionPlan;
+    public Subscription(LocalDate startDate, LocalDate endDate, String status,
+            Customer customer, SubscriptionPlan subscriptionPlan) {
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.status = status;
+            this.customer = customer;
+            this.subscriptionPlan = subscriptionPlan;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public String getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
@@ -75,11 +76,11 @@ public class Subscription {
         this.id = id;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
