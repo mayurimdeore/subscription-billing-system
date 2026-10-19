@@ -6,7 +6,7 @@ A RESTful backend application built with Java and Spring Boot to manage customer
 
 The Subscription Billing System demonstrates backend development using a layered architecture, RESTful APIs, relational database integration, request validation, business rules, and exception handling.
 
-The project showcases core Java backend development skills, including API development, persistence using Spring Data JPA, PostgreSQL integration, and automated testing.
+The project showcases Java backend development skills, including API development, persistence using Spring Data JPA, PostgreSQL integration, and automated testing.
 
 ## Features
 
@@ -15,14 +15,14 @@ The project showcases core Java backend development skills, including API develo
 - Subscription creation and tracking
 - Invoice management
 - Payment management
-- RESTful CRUD APIs for the main resources
+- REST APIs for the main resources
 - PostgreSQL database integration
 - Spring Data JPA and Hibernate ORM
 - Request validation using Bean Validation
 - Centralized exception handling
 - Business-rule validation for subscription dates
 - Service-layer and controller-layer unit tests
-- Interactive API documentation using Swagger UI / OpenAPI
+- Interactive API documentation using Swagger UI and OpenAPI
 
 ## Technology Stack
 
@@ -59,8 +59,6 @@ The application follows a layered architecture that separates request handling, 
 
 ## API Endpoints
 
-The application provides REST endpoints for managing the main resources.
-
 | Resource | Base Endpoint |
 |---|---|
 | Customers | `/api/customers` |
@@ -77,7 +75,7 @@ The project uses Springdoc OpenAPI to provide interactive API documentation.
 
 After starting the application, open:
 
-**[Swagger UI](http://localhost:8081/swagger-ui.html)**
+[Swagger UI](http://localhost:8081/swagger-ui.html)
 
 Swagger UI allows you to:
 
@@ -92,7 +90,7 @@ Unit tests have been written for the service and controller layers using JUnit a
 
 ### Automated Test Results
 
-According to the completed test runs, 85 tests passed.
+The project documentation records 85 passing tests. Confirm these counts against the latest successful test run before relying on them.
 
 | Test Layer | Tests Passed |
 |---|---:|
@@ -114,9 +112,26 @@ The following customer API operations were manually tested through Swagger UI ag
 | Delete customer | `DELETE /api/customers/{id}` | Passed — HTTP 204 |
 | Verify deletion | `GET /api/customers` | Passed — HTTP 200 |
 
-The tests verified customer creation, retrieval, updating, deletion, and persistence through the REST API. After deletion, the test customer no longer appeared in the customer list.
+The tests verified customer creation, retrieval, updating, and deletion. After deletion, the test customer no longer appeared in the customer list.
 
-**Testing in progress:** Manual API testing for subscription plans, subscriptions, invoices, and payments.
+### Subscription Plan API Testing
+
+Tested using Swagger UI against the running application.
+
+| Operation | Endpoint | Result |
+|---|---|---|
+| Create plan | `POST /api/plans` | Passed — HTTP 200 |
+| List plans | `GET /api/plans` | Passed — HTTP 200 |
+| Get plan by ID | `GET /api/plans/{id}` | Passed — HTTP 200 before deletion |
+| Update plan | `PUT /api/plans/{id}` | Passed — HTTP 200 |
+| Delete plan | `DELETE /api/plans/{id}` | HTTP 404 — requires investigation |
+| Verify plan absence | `GET /api/plans/{id}` and `GET /api/plans` | HTTP 404 by ID; list returned HTTP 200 without plan ID 4 |
+
+**Test data:** Created plan ID 4 (`Monthly Plan`) with a price of 499 and a duration of 30 days. Updated it to `Monthly Plan Updated`, priced at 599 for 30 days.
+
+**Note:** Plan ID 4 was absent from the subsequent GET-by-ID response and plans list. The DELETE request returned HTTP 404, so the delete endpoint's behavior still requires investigation.
+
+**Testing in progress:** Manual API testing for subscriptions, invoices, and payments.
 
 ## Prerequisites
 
