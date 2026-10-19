@@ -6,7 +6,7 @@ A RESTful backend application built with Java and Spring Boot to manage customer
 
 The Subscription Billing System demonstrates backend development using a layered architecture, RESTful APIs, relational database integration, request validation, business rules, and exception handling.
 
-The project is designed to demonstrate core Java backend development skills, including API development, persistence with Spring Data JPA, and automated testing.
+The project showcases core Java backend development skills, including API development, persistence using Spring Data JPA, PostgreSQL integration, and automated testing.
 
 ## Features
 
@@ -26,34 +26,34 @@ The project is designed to demonstrate core Java backend development skills, inc
 
 ## Technology Stack
 
-- **Language:** Java 11
-- **Framework:** Spring Boot 2.7.18
-- **Persistence:** Spring Data JPA, Hibernate
-- **Database:** PostgreSQL
-- **Build Tool:** Maven
-- **Testing:** JUnit, Mockito, Spring MockMvc
-- **API Testing:** Postman, Swagger UI
-- **API Documentation:** Springdoc OpenAPI (`springdoc-openapi-ui` 1.8.0)
-- **Version Control:** Git and GitHub
-- **IDE:** Eclipse
+| Category | Technology |
+|---|---|
+| Language | Java 11 |
+| Framework | Spring Boot 2.7.18 |
+| Persistence | Spring Data JPA, Hibernate |
+| Database | PostgreSQL |
+| Build Tool | Maven |
+| Testing | JUnit, Mockito, Spring MockMvc |
+| API Testing | Swagger UI, Postman |
+| API Documentation | Springdoc OpenAPI 1.8.0 |
+| Version Control | Git, GitHub |
+| IDE | Eclipse |
 
 ## Architecture
 
-The application follows a layered architecture to separate request handling, business logic, database operations, and error handling.
+The application follows a layered architecture that separates request handling, business logic, database operations, and error handling.
 
 - **Controller Layer:** Handles HTTP requests and responses.
 - **Service Layer:** Contains business logic and validation rules.
 - **Repository Layer:** Performs database operations using Spring Data JPA.
 - **Entity Layer:** Represents database entities and their relationships.
-- **Exception Handling:** Handles application errors using custom exceptions and centralized exception handling.
+- **Exception Handling:** Handles application errors through custom exceptions and centralized exception handling.
 
 ## Main Entities
 
-The application manages the following entities:
-
 - **Customer:** Stores customer information.
 - **SubscriptionPlan:** Represents available subscription plans.
-- **Subscription:** Tracks customer subscriptions and their dates and status.
+- **Subscription:** Tracks customer subscriptions, dates, and status.
 - **Invoice:** Represents invoices associated with subscriptions.
 - **Payment:** Stores payment information associated with invoices.
 
@@ -69,7 +69,7 @@ The application provides REST endpoints for managing the main resources.
 | Invoices | `/api/invoices` |
 | Payments | `/api/payments` |
 
-The controllers provide CRUD operations for these resources. Refer to the application code or Swagger UI for the exact request formats, response schemas, and supported operations.
+Refer to the application controllers and Swagger UI for the exact request formats, response schemas, and supported operations.
 
 ## Swagger API Documentation
 
@@ -77,11 +77,11 @@ The project uses Springdoc OpenAPI to provide interactive API documentation.
 
 After starting the application, open:
 
-**http://localhost:8081/swagger-ui.html**
+**[Swagger UI](http://localhost:8081/swagger-ui.html)**
 
 Swagger UI allows you to:
 
-- Explore the available REST endpoints.
+- Explore available REST endpoints.
 - Inspect request and response schemas.
 - Review API parameters.
 - Execute API requests directly from your browser.
@@ -90,9 +90,9 @@ Swagger UI allows you to:
 
 Unit tests have been written for the service and controller layers using JUnit and Mockito, with Spring MockMvc for controller testing.
 
-### Test Results
+### Automated Test Results
 
-**85 tests passed** according to the completed test runs.
+According to the completed test runs, 85 tests passed.
 
 | Test Layer | Tests Passed |
 |---|---:|
@@ -100,7 +100,23 @@ Unit tests have been written for the service and controller layers using JUnit a
 | Controller Layer | 25 |
 | **Total** | **85** |
 
-The tests cover scenarios such as retrieving resources, handling missing records, and checking controller behavior.
+These tests cover scenarios such as retrieving resources, handling missing records, and checking controller behavior.
+
+### Manual API Testing Progress
+
+The following customer API operations were manually tested through Swagger UI against the running Spring Boot application connected to PostgreSQL.
+
+| Operation | Endpoint | Result |
+|---|---|---|
+| Retrieve customers | `GET /api/customers` | Passed — HTTP 200 |
+| Create customer | `POST /api/customers` | Passed — HTTP 200 |
+| Update customer | `PUT /api/customers/{id}` | Passed — HTTP 200 |
+| Delete customer | `DELETE /api/customers/{id}` | Passed — HTTP 204 |
+| Verify deletion | `GET /api/customers` | Passed — HTTP 200 |
+
+The tests verified customer creation, retrieval, updating, deletion, and persistence through the REST API. After deletion, the test customer no longer appeared in the customer list.
+
+**Testing in progress:** Manual API testing for subscription plans, subscriptions, invoices, and payments.
 
 ## Prerequisites
 
@@ -115,23 +131,28 @@ Before running the application, ensure you have:
 ## Database Configuration
 
 1. Install and start PostgreSQL.
-2. Create a database named `subscription_billing`, if that matches your local application configuration.
+2. Create a database named `subscription_billing`, if it matches your local application configuration.
 3. Configure the database connection in `src/main/resources/application.properties`.
-4. Set your database credentials securely. Do not commit real passwords or other secrets to GitHub.
+4. Configure your database credentials securely.
 
 Example configuration:
 
 ```properties
+spring.application.name=SubscriptionBillingSystem
+
 spring.datasource.url=jdbc:postgresql://localhost:5432/subscription_billing
 spring.datasource.username=postgres
 spring.datasource.password=${DB_PASSWORD}
 spring.datasource.driver-class-name=org.postgresql.Driver
 
 spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+
 server.port=8081
 ```
 
-**Note:** Adjust the database name, username, port, and password variable to match your actual local configuration. Set the `DB_PASSWORD` environment variable only if your application uses that variable.
+**Important:** This example assumes your application uses the `DB_PASSWORD` environment variable. Set it in your local environment or Eclipse run configuration. Never commit real database passwords, access tokens, or other secrets to GitHub.
 
 The `spring.jpa.hibernate.ddl-auto=update` setting allows Hibernate to update the database schema. For production deployments, use a controlled database migration strategy.
 
@@ -159,17 +180,19 @@ In Eclipse, right-click the project and select **Maven → Update Project**.
 
 Run `SubscriptionBillingApplication.java` as a Java application in Eclipse.
 
-Alternatively, from the project directory, use:
+Alternatively, from the project directory, run:
 
 ```bash
 mvn spring-boot:run
 ```
 
+Ensure the `DB_PASSWORD` environment variable is configured before starting the application.
+
 ### 6. Open Swagger UI
 
 After the application starts successfully, open:
 
-http://localhost:8081/swagger-ui.html
+[http://localhost:8081/swagger-ui.html](http://localhost:8081/swagger-ui.html)
 
 ## Future Enhancements
 
@@ -187,3 +210,4 @@ http://localhost:8081/swagger-ui.html
 
 - GitHub: [mayurimdeore](https://github.com/mayurimdeore)
 - Project Repository: [Subscription Billing System](https://github.com/mayurimdeore/subscription-billing-system)
+- LinkedIn: [mayuri-deore](https://linkedin.com/in/mayuri-deore)
