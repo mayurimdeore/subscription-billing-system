@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -29,8 +30,12 @@ public class Payment {
     private String paymentMethod;
 
     @NotBlank
+    @Pattern(
+        regexp = "(?i)pending|completed",
+        message = "Payment status must be pending or completed"
+    )
     private String status;
-
+    
     @NotNull
     @ManyToOne
     @JoinColumn(name = "invoice_id")
