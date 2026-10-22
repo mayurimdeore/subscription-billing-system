@@ -40,7 +40,7 @@ class PaymentControllerTest {
                 500.0,
                 "2026-10-16",
                 "UPI",
-                "SUCCESS",
+                "completed",
                 invoice
         );
     }
