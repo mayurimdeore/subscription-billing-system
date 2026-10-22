@@ -100,4 +100,18 @@ class PaymentControllerTest {
 
         verify(paymentService, never()).deletePayment(99L);
     }
+    
+    @Test
+    void testCreatePaymentWithInvalidStatus() throws Exception {
+        Payment payment = createValidPayment();
+        payment.setStatus("SUCCESS");
+
+        mockMvc.perform(post("/api/payments")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(payment)))
+                .andExpect(status().isBadRequest());
+
+        verify(paymentService, never())
+                .createPayment(any(Payment.class));
+    }
 }
